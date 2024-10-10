@@ -13,25 +13,25 @@
 <h5>Cadastro de Pessoas</h5>
 
 <div class="row">
-    <form action="*/salvarpessoa" id="formpessoa" method="post" th:object="${pessoaobj}" class="col s12">
+    <form action="*/salvarPessoa" id="formPessoa" method="post"  class="col s12">
 
         <div class="row">
             <div class="input-field col s6">
                 <label for="id" class="active">ID</label>
-                <input name="id" id="id" type="text" th:field="*{id}"
+                <input name="id" id="id" type="text"
                        readonly="readonly">
             </div>
 
             <div class="input-field col s6">
                 <label for="nome" class="active">Nome:</label>
-                <input name="nome" id="nome" th:field="*{nome}"
+                <input name="nome" id="nome"
                        class="validate" type="text">
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <label for="sobrenome" class="active">Sobrenome:</label>
-                <input name="sobrenome" id="sobrenome" th:field="*{sobrenome}"
+                <input name="sobrenome" id="sobrenome"
                        class="validate" type="text">
             </div>
         </div>
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <label for="idade" class="active">Idade:</label>
-                <input name="idade" id="idade" th:field="*{idade}"
+                <input name="idade" id="idade"
                        class="validate" type="text">
             </div>
         </div>
@@ -47,7 +47,7 @@
             <div class="input-field col s6">
                 <input class="btn waves-effect waves-light" type="submit"
                        value="Salvar" >
-                <button class="btn waves-effect waves-light" onclick="document.getElementById('formpessoa').reset()">Novo</button>
+                <button class="btn waves-effect waves-light" onclick="document.getElementById('formPessoa').reset()">Novo</button>
             </div>
         </div>
     </form>
@@ -57,14 +57,14 @@
 <br/>
 
 <div class="row">
-    <form action="pesquisapessoa" method="post" class="col s12">
+    <form action="pesquisaPessoa" method="post" class="col s12">
         <div class="row">
             <div class="input-field col s12">
-                <label for="nomepesquisa" class="active">Pesquisa por nome:</label>
-                <input name="nomepesquisa" id="nomepesquisa" class="validate">
+                <label for="nomePesquisa" class="active">Pesquisa por nome:</label>
+                <input name="nomePesquisa" id="nomePesquisa" class="validate">
                 <input class="btn waves-effect waves-light" type="submit"
                        value="Pesquisar"/>
-                <a class=" btn waves-effect waves-light" href="/listapessoas">Lista de pessoas</a>
+                <a class=" btn waves-effect waves-light" href="/listaPessoas">Lista de pessoas</a>
             </div>
         </div>
     </form>
@@ -82,12 +82,12 @@
     </thead>
     <tbody>
     <tr th:each="pessoa : ${pessoas}">
-        <td th:text="${pessoa.id}"></td>
-        <td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}" th:text="${pessoa.nome}"></a></td>
-        <td th:text="${pessoa.sobrenome}"></td>
-        <td th:text="${pessoa.idade}"></td>
-        <td><a th:href="@{/editarpessoa/{idpessoa}(idpessoa=${pessoa.id})} ">Editar</a></td>
-        <td><a th:href="@{/removerpessoa/{idpessoa}(idpessoa=${pessoa.id})} ">Excluir</a></td>
+        <td th:text="${pessoa.id}"/>
+        <td><a th:href="@{/telefones/{idPessoa}(idPessoa=${pessoa.id})}" th:text="${pessoa.nome}"></a></td>
+        <td th:text="${pessoa.sobrenome}"/>
+        <td th:text="${pessoa.idade}"/>
+        <td><a th:href="@{/editarPessoa/{idPessoa}(idPessoa=${pessoa.id})} ">Editar</a></td>
+        <td><a th:href="@{/removerPessoa/{idPessoa}(idPessoa=${pessoa.id})} ">Excluir</a></td>
     </tr>
     </tbody>
 </table>
