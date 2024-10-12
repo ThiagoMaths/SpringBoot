@@ -12,6 +12,14 @@
 <h3>Spring Boot + Thymeleaf</h3>
 <h5>Cadastro de Pessoas</h5>
 
+<br/>
+    <div th:each="m : ${msg}" >
+        <span th:text="${m}"/>
+    </div>
+<br/>
+
+
+
 <div class="row">
     <form action="*/salvarPessoa" id="formPessoa" method="post"  class="col s12">
 
