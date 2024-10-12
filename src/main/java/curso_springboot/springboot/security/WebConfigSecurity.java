@@ -1,6 +1,5 @@
 package curso_springboot.springboot.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,14 +29,14 @@ public class WebConfigSecurity {
                         .loginPage("/login")
                         .permitAll()
                         .defaultSuccessUrl("/", true)
-                .failureHandler(new authenticationFail()))
+                        .failureHandler(new authenticationFail()))
                 .logout(logout -> logout
                         .logoutSuccessUrl("/"));
 
         return http.build();
     }
 
-@Bean
+    @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder =
                 http.getSharedObject(AuthenticationManagerBuilder.class);
