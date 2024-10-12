@@ -1,14 +1,17 @@
 package curso_springboot.springboot.controller;
 
 import curso_springboot.springboot.model.Pessoa;
-import curso_springboot.springboot.model.Telefone;
 import curso_springboot.springboot.repository.PessoaRepository;
-import curso_springboot.springboot.repository.TelefoneRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,7 +33,22 @@ public class PessoaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/salvarPessoa")
-    public ModelAndView salvar(Pessoa pessoa) {
+    public ModelAndView salvar(@Valid Pessoa pessoa, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView mv = new ModelAndView("cadastro/cadastroPessoa");
+            Iterable<Pessoa> pessoasIt = pessoaRepository.findAll();
+            mv.addObject("pessoas", pessoasIt);
+            mv.addObject("pessoaObj", new Pessoa());
+
+            List<String> msgs = new ArrayList<>();
+            for(ObjectError one : bindingResult.getAllErrors()) {
+                msgs.add(one.getDefaultMessage());
+            }
+
+            mv.addObject("msg", msgs);
+            return mv;
+        }
 
         pessoaRepository.save(pessoa);
 
@@ -88,5 +106,4 @@ public class PessoaController {
     }
 
 
-    
 }
