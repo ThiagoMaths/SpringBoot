@@ -3,7 +3,6 @@ package curso_springboot.springboot.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.context.annotation.Bean;
 
 import java.io.Serial;
 import java.io.Serializable;
