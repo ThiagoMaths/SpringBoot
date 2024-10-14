@@ -1,5 +1,6 @@
 package curso_springboot.springboot.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,12 +16,17 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebConfigSecurity {
 
+    @Autowired
+    private ImplementacaoUserDetailServices services;
+
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public")
                         .permitAll()
+                        .requestMatchers("/cadastroPessoa")
+                        .hasAnyRole("ADMIN")
                         .requestMatchers("/admin")
                         .hasRole("ADMIN")
                         .anyRequest()
@@ -28,10 +34,11 @@ public class WebConfigSecurity {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
-                        .defaultSuccessUrl("/", true)
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/cadastroPessoa", true)
                         .failureHandler(new authenticationFail()))
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/"));
+                        .logoutSuccessUrl("/login?logout"));
 
         return http.build();
     }
@@ -50,12 +57,11 @@ public class WebConfigSecurity {
     }
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password(passwordEncoder().encode("user")).roles("USER")
-                .and()
-                .withUser("admin")
-                .password(passwordEncoder().encode("admin")).roles("ADMIN");
+
+        auth
+                .userDetailsService(services)
+                .passwordEncoder(passwordEncoder());
+
     }
 
 }
