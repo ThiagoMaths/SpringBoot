@@ -26,8 +26,6 @@ public class WebConfigSecurity {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/").authenticated()
-                        .requestMatchers("/materialize/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/resources/**", "/static/**", "/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.permitAll()
                         .loginPage("/login")
