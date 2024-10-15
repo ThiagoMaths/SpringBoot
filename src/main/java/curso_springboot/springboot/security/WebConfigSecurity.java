@@ -3,6 +3,7 @@ package curso_springboot.springboot.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,31 +15,26 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebConfigSecurity {
+public class WebConfigSecurity{
 
     @Autowired
-    private ImplementacaoUserDetailServices services;
+    private ImplementacaoUserDetailServices userDetailServices;
 
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain( HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public")
-                        .permitAll()
-                        .requestMatchers("/cadastroPessoa")
-                        .hasAnyRole("ADMIN")
-                        .requestMatchers("/admin")
-                        .hasRole("ADMIN")
-                        .anyRequest()
-                        .authenticated())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/materialize/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/resources/**", "/static/**", "/**").permitAll()
+                        .requestMatchers("/").authenticated()
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                        .loginProcessingUrl("/login")
+                        .loginPage("/login").permitAll()
                         .defaultSuccessUrl("/cadastroPessoa", true)
-                        .failureHandler(new authenticationFail()))
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout"));
+                        .failureUrl("/login?error"))
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout"));
 
         return http.build();
     }
@@ -53,13 +49,16 @@ public class WebConfigSecurity {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
+
     }
+
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth
-                .userDetailsService(services)
+                .userDetailsService(userDetailServices)
                 .passwordEncoder(passwordEncoder());
 
     }
