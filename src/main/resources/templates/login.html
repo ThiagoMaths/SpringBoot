@@ -6,44 +6,40 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection"/>
-<link type="text/css" rel="stylesheet" href="/materialize/css/login.css" />
+    <link type="text/css" rel="stylesheet" href="/materialize/css/login.css"/>
 
 </head>
 <body>
 <h1>Acesso ao Sistema</h1>
-    <div class="row">
-            <form th:action="@{/login}" method="POST" class="col s12">
+<div class="row">
+    <form th:action="@{/login}" method="POST" class="col s12">
 
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="username">Login:</label>
-                    <input id="username" name="username"
-                           type="text" class="validate"/>
-                </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="username">Login:</label>
+                <input id="username" name="username"
+                       type="text" class="validate"/>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="password">Senha:</label>
-                    <input id="password" name="password"
-                           type="password" class="validate"/>
-                </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="password">Senha:</label>
+                <input id="password" name="password"
+                       type="password" class="validate"/>
             </div>
-
-
-            <div class="row">
-                <div class="col s6">
-                 <input class="btn waves-effect waves-light" name="entrar" type="submit"  value="Entrar"/>
-                </div>
-            </div>
-        </form>
-
-
-
         </div>
 
 
+        <div class="row">
+            <div class="col s6">
+                <input class="btn waves-effect waves-light" name="entrar" type="submit" value="Entrar"/>
+            </div>
+        </div>
+    </form>
 
+
+</div>
 
 
 <script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
