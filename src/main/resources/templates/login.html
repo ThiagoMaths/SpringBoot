@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -12,12 +12,12 @@
 <body>
 <h1>Acesso ao Sistema</h1>
     <div class="row">
-            <form action="login" method="POST" class="col s12">
+            <form th:action="@{/login}" method="POST" class="col s12">
 
             <div class="row">
                 <div class="input-field col s6">
-                    <label for="login">Login:</label>
-                    <input id="login" name="login"
+                    <label for="username">Login:</label>
+                    <input id="username" name="username"
                            type="text" class="validate"/>
                 </div>
             </div>
@@ -33,7 +33,7 @@
 
             <div class="row">
                 <div class="col s6">
-                 <input class="btn waves-effect waves-light" type="submit" value="Entrar"/>
+                 <input class="btn waves-effect waves-light" name="entrar" type="submit"  value="Entrar"/>
                 </div>
             </div>
         </form>

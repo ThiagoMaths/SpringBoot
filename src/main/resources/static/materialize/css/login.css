@@ -1,3 +1,15 @@
-form button {
-    color: white;
+html{
+    overflow-x: hidden;
+    height:500px;
 }
+
+
+form {
+    position: absolute;
+    top: 40%;
+    left: 33%;
+    right: 33%;
+}
+
+
+

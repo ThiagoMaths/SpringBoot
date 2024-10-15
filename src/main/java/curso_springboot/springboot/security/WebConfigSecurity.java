@@ -15,25 +15,24 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebConfigSecurity{
+public class WebConfigSecurity {
 
     @Autowired
     private ImplementacaoUserDetailServices userDetailServices;
 
     @Bean
-    public SecurityFilterChain filterChain( HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/").authenticated()
                         .requestMatchers("/materialize/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/resources/**", "/static/**", "/**").permitAll()
-                        .requestMatchers("/").authenticated()
                         .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login").permitAll()
+                .formLogin(form -> form.permitAll()
+                        .loginPage("/login")
                         .defaultSuccessUrl("/cadastroPessoa", true)
-                        .failureUrl("/login?error"))
+                        .failureHandler(new AuthenticationFail()))
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout"));
 
         return http.build();
