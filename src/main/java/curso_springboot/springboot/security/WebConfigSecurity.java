@@ -25,11 +25,11 @@ public class WebConfigSecurity {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.permitAll()
                         .loginPage("/login")
-                        .defaultSuccessUrl("/cadastroPessoa", true)
+                        .defaultSuccessUrl("/", true)
                         .failureHandler(new AuthenticationFail()))
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout"));
 
